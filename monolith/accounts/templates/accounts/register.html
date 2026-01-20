@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - BookStore{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-container {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #333;
+    }
+    
+    .form-group input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+    
+    .form-group input:focus {
+        outline: none;
+        border-color: #667eea;
+    }
+    
+    .form-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .form-header h2 {
+        color: #667eea;
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+    
+    .errorlist {
+        list-style: none;
+        color: #dc3545;
+        margin: 5px 0;
+        font-size: 14px;
+    }
+    
+    .form-footer {
+        text-align: center;
+        margin-top: 20px;
+    }
+    
+    .form-footer a {
+        color: #667eea;
+        text-decoration: none;
+    }
+    
+    .form-footer a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-header">
+        <h2>Đăng ký tài khoản</h2>
+        <p>Tham gia cửa hàng sách của chúng tôi!</p>
+    </div>
+    
+    <form method="post" action="{% url 'register' %}">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="name">Họ và tên</label>
+            <input type="text" id="name" name="name" placeholder="Nhập họ tên của bạn" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="example@email.com" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Mật khẩu</label>
+            <input type="password" id="password" name="password" placeholder="Tối thiểu 6 ký tự" required>
+        </div>
+        
+        <button type="submit" class="btn" style="width: 100%;">Đăng ký</button>
+    </form>
+    
+    <div class="form-footer">
+        <p>Đã có tài khoản? <a href="{% url 'login' %}">Đăng nhập ngay</a></p>
+    </div>
+</div>
+{% endblock %}

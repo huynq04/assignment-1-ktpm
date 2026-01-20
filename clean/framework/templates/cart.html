@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+
+{% block title %}Shopping Cart - BookStore{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    
+    .page-header h2 {
+        color: #667eea;
+        font-size: 36px;
+        margin-bottom: 10px;
+    }
+    
+    .cart-items {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .cart-item {
+        background: white;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s;
+    }
+    
+    .cart-item:hover {
+        border-color: #667eea;
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+    }
+    
+    .item-info {
+        flex: 1;
+    }
+    
+    .item-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 5px;
+    }
+    
+    .item-author {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 10px;
+    }
+    
+    .item-details {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+    
+    .item-quantity {
+        font-size: 16px;
+        color: #667eea;
+        font-weight: 600;
+    }
+    
+    .item-price {
+        font-size: 20px;
+        font-weight: 700;
+        color: #667eea;
+    }
+    
+    .item-subtotal {
+        font-size: 24px;
+        font-weight: 700;
+        color: #28a745;
+        min-width: 100px;
+        text-align: right;
+    }
+    
+    .cart-summary {
+        max-width: 800px;
+        margin: 30px auto;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+    
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        font-size: 18px;
+    }
+    
+    .summary-total {
+        border-top: 2px solid rgba(255,255,255,0.3);
+        padding-top: 15px;
+        margin-top: 15px;
+        font-size: 28px;
+        font-weight: 700;
+    }
+    
+    .empty-cart {
+        text-align: center;
+        padding: 60px 20px;
+    }
+    
+    .empty-cart-icon {
+        font-size: 80px;
+        margin-bottom: 20px;
+    }
+    
+    .empty-cart h3 {
+        font-size: 28px;
+        color: #667eea;
+        margin-bottom: 15px;
+    }
+    
+    .empty-cart p {
+        color: #666;
+        margin-bottom: 30px;
+    }
+    
+    .action-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>🛒 Giỏ hàng</h2>
+    <p>Xem lại các sản phẩm của bạn</p>
+</div>
+
+{% if cart_items %}
+    <div class="cart-items">
+        {% for item in cart_items %}
+        <div class="cart-item">
+            <div class="item-info">
+                <div class="item-title">📚 {{ item.book.title }}</div>
+                <div class="item-author">{{ item.book.author }}</div>
+                <div class="item-details">
+                    <span class="item-quantity">Số lượng: {{ item.quantity }}</span>
+                    <span class="item-price">${{ item.book.price }}</span>
+                </div>
+            </div>
+            <div class="item-subtotal">
+                ${{ item.total }}
+            </div>
+            <form method="post" action="{% url 'remove_from_cart' item.id %}" style="margin-left: 15px;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-secondary" style="background: #dc3545; color: white;">Xóa</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="cart-summary">
+        <div class="summary-row summary-total">
+            <span>Tổng cộng:</span>
+            <span>${{ total_price }}</span>
+        </div>
+        <div class="action-buttons">
+            <a href="{% url 'books' %}" class="btn btn-secondary" style="flex: 1; text-align: center;">Tiếp tục mua sắm</a>
+        </div>
+    </div>
+{% else %}
+    <div class="empty-cart">
+        <div class="empty-cart-icon">🛒</div>
+        <h3>Giỏ hàng trống</h3>
+        <p>Hãy thêm sách vào giỏ hàng của bạn!</p>
+        <a href="{% url 'books' %}" class="btn">Xem sách</a>
+    </div>
+{% endif %}
+{% endblock %}

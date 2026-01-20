@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookStore - Clean Architecture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            background: white;
+            padding: 60px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 48px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+        
+        .architecture-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 BookStore</h1>
+        <div class="architecture-badge">Clean Architecture</div>
+        <p class="subtitle">Chào mừng đến với cửa hàng sách trực tuyến</p>
+        
+        {% if user.is_authenticated %}
+            <p style="color: #667eea; margin-bottom: 20px;">Xin chào, <strong>{{ user.name }}</strong>!</p>
+            <div class="buttons">
+                <a href="{% url 'books' %}" class="btn btn-primary">Xem sách</a>
+                <a href="{% url 'view_cart' %}" class="btn btn-secondary">Giỏ hàng</a>
+                <a href="{% url 'logout' %}" class="btn btn-secondary">Đăng xuất</a>
+            </div>
+        {% else %}
+            <div class="buttons">
+                <a href="{% url 'login' %}" class="btn btn-primary">Đăng nhập</a>
+                <a href="{% url 'register' %}" class="btn btn-secondary">Đăng ký</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
